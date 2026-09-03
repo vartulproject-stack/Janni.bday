@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Special ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+    .layer { display: none; }
+    .active { display: block; }
+    
+    /* Layer 1 GIF styling */
+    .gif-container img {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    /* Countdown Box Styling */
+    .timer {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    .time-box {
+      background: #ff4b5c;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      width: 22%;
+    }
+    .time-box span { font-size: 1.2rem; font-weight: bold; display: block; }
+
+    button {
+      background: #ff4b5c;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 10px 5px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    button:hover { transform: scale(1.05); }
+
+    /* Coupon Card */
+    .coupon {
+      border: 2px dashed #ff4b5c;
+      background: #fff0f3;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div id="layer1" class="layer active">
+      <h2>Something Special Is Coming! ✨</h2>
+      <div class="gif-container">
+        <img src="gif.1.gif" alt="Cute GIF">
+      </div>
+      <p>Aapke birthday ke liye ek chota sa surprise!</p>
+      <button onclick="nextLayer(2)">See Countdown ⏳</button>
+    </div>
+
+    <div id="layer2" class="layer">
+      <h2>16th November Countdown! 🥳</h2>
+      <div class="timer">
+        <div class="time-box"><span id="days">00</span>Days</div>
+        <div class="time-box"><span id="hours">00</span>Hours</div>
+        <div class="time-box"><span id="mins">00</span>Mins</div>
+        <div class="time-box"><span id="secs">00</span>Secs</div>
+      </div>
+      <p>Sabse special din aane wala hai...</p>
+      <button onclick="nextLayer(3)">Claim Birthday Gift 🎁</button>
+    </div>
+
+    <div id="layer3" class="layer">
+      <h2>Special Gift Coupon 🎟️</h2>
+      <p>Tap below to redeem your gift!</p>
+      <div class="coupon" onclick="claimCoupon()">
+        <h3 id="couponText">🎁 Click to Redeem 🎁</h3>
+      </div>
+      <button id="nextBtn3" style="display: none;" onclick="nextLayer(4)">See Message ➡️</button>
+    </div>
+
+    <div id="layer4" class="layer">
+      <h2 style="color: #ff4b5c;">"Aap meree liye bohot khas h... ✨"</h2>
+      <p>Kabhi-kabhi hum galti kar dete hain ya thode buddhu ban jaate hain, par mera irada aapko dukhi karne ka kabhi nahi hota. Aapki ek smile mere liye sabse badi cheez hai. Thank you meri life mein aane ke liye!</p>
+      <p style="font-weight: bold; font-size: 1.1rem; color: #ff4b5c; margin-top: 15px;">❤️ Hum Aapko Bohot Pyar Karte Hain! ❤️</p>
+    </div>
+
+  </div>
+
+  <script>
+    function nextLayer(num) {
+      document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+      document.getElementById('layer' + num).classList.add('active');
+      
+      if(num === 2) {
+        startCountdown();
+      }
+      if(num === 4) {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      }
+    }
+
+    function startCountdown() {
+      const targetDate = new Date("November 16, 2026 00:00:00").getTime();
+
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if(diff > 0) {
+          document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+          document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }
+      }, 1000);
+    }
+
+    function claimCoupon() {
+      document.getElementById('couponText').innerText = "🎟️ Valid For: Birthday Special Treat & Unlimited Hugs!";
+      document.getElementById('nextBtn3').style.display = "inline-block";
+    }
+  </script>
+
+</body>
+</html>
+
